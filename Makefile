@@ -16,7 +16,7 @@ SO_LIBRARY   = libadaaugeas.so.$(VERSION)
 
 PREPARE := $(shell mkdir -p $(OBJDIR) $(LIBDIR))
 
-all: build_lib gpr
+all: gpr build_lib
 
 build_lib:
 	gnatmake -Padaaugeas
@@ -25,6 +25,9 @@ gpr:
 	gnatprep -b gnat/adaaugeas.gpr.gp gnat/adaaugeas.gpr -DInvoked_By_Makefile \
        '-DIncludedir="$(PREFIX)/include"' '-DLibdir="$(PREFIX)/$(LIBDIR)"' \
        '-DAlidir="$(PREFIX)/$(LIBDIR)"' '-DLibrary_Type="${LIBRARY_TYPE}"'
+	gnatprep -b adaaugeas.gpr.gp adaaugeas.gpr -DInvoked_By_Makefile \
+       '-DVersion="$(VERSION)"' '-DLibdir="$(LIBDIR)"' \
+       '-DLibrary_Type="${LIBRARY_TYPE}"'
 
 build_check:    
 	gnatmake -Padaaugeas_tests
